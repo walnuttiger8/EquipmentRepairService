@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b766efcf08db4834826e0021f2516ca3" Name="Diagram1">
+        <EntityTypeShape EntityType="UP4Model.Department" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="UP4Model.Employee" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UP4Model.EmployeeTransfer" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="UP4Model.EquipmentUnit" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UP4Model.EquipmentUnitTransfer" Width="1.5" PointX="6" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UP4Model.Invoice" Width="1.5" PointX="3.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="UP4Model.Repair" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="UP4Model.SparePart" Width="1.5" PointX="6" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UP4Model.SparePartRequest" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="UP4Model.FK__EmployeeT__Depar__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="UP4Model.FK__Equipment__Depar__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="UP4Model.FK__EmployeeT__Emplo__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="UP4Model.FK__Repair__IssueEmp__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="UP4Model.FK__Repair__Receiver__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="UP4Model.FK__Repair__RepairEm__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="UP4Model.FK__Equipment__Equip__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="UP4Model.FK__Repair__Equipmen__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="UP4Model.FK__SparePart__Invoi__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="UP4Model.FK__SparePart__Repai__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="UP4Model.FK__SparePart__Spare__5070F446" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

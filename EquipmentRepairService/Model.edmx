@@ -1,0 +1,720 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище UP4Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EmployeeTransfer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" />
+        </EntityType>
+        <EntityType Name="EquipmentUnit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StockNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Model" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReleaseYear" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EquipmentUnitTransfer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EquipmentUnitId" Type="int" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="TransferDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecevieDate" Type="date" Nullable="false" />
+          <Property Name="UnitCount" Type="int" Nullable="false" />
+          <Property Name="UnitCost" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Repair">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EquipmentUnitId" Type="int" />
+          <Property Name="IssueEmployeeId" Type="int" />
+          <Property Name="ReceiverEmployeeId" Type="int" />
+          <Property Name="RepairEmployeeId" Type="int" />
+          <Property Name="DeliveryDate" Type="date" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Term" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SparePart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvoiceId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StockCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SparePartRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RepairId" Type="int" />
+          <Property Name="SparePartId" Type="int" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__EmployeeT__Depar__46E78A0C">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeTransfer" Type="Self.EmployeeTransfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeTransfer">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeT__Emplo__47DBAE45">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeTransfer" Type="Self.EmployeeTransfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeTransfer">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Equipment__Depar__48CFD27E">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="EquipmentUnitTransfer" Type="Self.EquipmentUnitTransfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentUnitTransfer">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Equipment__Equip__49C3F6B7">
+          <End Role="EquipmentUnit" Type="Self.EquipmentUnit" Multiplicity="0..1" />
+          <End Role="EquipmentUnitTransfer" Type="Self.EquipmentUnitTransfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentUnit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentUnitTransfer">
+              <PropertyRef Name="EquipmentUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Repair__Equipmen__4AB81AF0">
+          <End Role="EquipmentUnit" Type="Self.EquipmentUnit" Multiplicity="0..1" />
+          <End Role="Repair" Type="Self.Repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentUnit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Repair">
+              <PropertyRef Name="EquipmentUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Repair__IssueEmp__4BAC3F29">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Repair" Type="Self.Repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Repair">
+              <PropertyRef Name="IssueEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Repair__Receiver__4CA06362">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Repair" Type="Self.Repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Repair">
+              <PropertyRef Name="ReceiverEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Repair__RepairEm__4D94879B">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Repair" Type="Self.Repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Repair">
+              <PropertyRef Name="RepairEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SparePart__Invoi__4E88ABD4">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SparePart" Type="Self.SparePart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SparePart">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SparePart__Repai__4F7CD00D">
+          <End Role="Repair" Type="Self.Repair" Multiplicity="0..1" />
+          <End Role="SparePartRequest" Type="Self.SparePartRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Repair">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SparePartRequest">
+              <PropertyRef Name="RepairId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SparePart__Spare__5070F446">
+          <End Role="SparePart" Type="Self.SparePart" Multiplicity="0..1" />
+          <End Role="SparePartRequest" Type="Self.SparePartRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SparePart">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SparePartRequest">
+              <PropertyRef Name="SparePartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище UP4ModelContainer">
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeTransfer" EntityType="Self.EmployeeTransfer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquipmentUnit" EntityType="Self.EquipmentUnit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquipmentUnitTransfer" EntityType="Self.EquipmentUnitTransfer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Repair" EntityType="Self.Repair" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SparePart" EntityType="Self.SparePart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SparePartRequest" EntityType="Self.SparePartRequest" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__EmployeeT__Depar__46E78A0C" Association="Self.FK__EmployeeT__Depar__46E78A0C">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="EmployeeTransfer" EntitySet="EmployeeTransfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeT__Emplo__47DBAE45" Association="Self.FK__EmployeeT__Emplo__47DBAE45">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeTransfer" EntitySet="EmployeeTransfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Equipment__Depar__48CFD27E" Association="Self.FK__Equipment__Depar__48CFD27E">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="EquipmentUnitTransfer" EntitySet="EquipmentUnitTransfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Equipment__Equip__49C3F6B7" Association="Self.FK__Equipment__Equip__49C3F6B7">
+            <End Role="EquipmentUnit" EntitySet="EquipmentUnit" />
+            <End Role="EquipmentUnitTransfer" EntitySet="EquipmentUnitTransfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Repair__Equipmen__4AB81AF0" Association="Self.FK__Repair__Equipmen__4AB81AF0">
+            <End Role="EquipmentUnit" EntitySet="EquipmentUnit" />
+            <End Role="Repair" EntitySet="Repair" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Repair__IssueEmp__4BAC3F29" Association="Self.FK__Repair__IssueEmp__4BAC3F29">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Repair" EntitySet="Repair" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Repair__Receiver__4CA06362" Association="Self.FK__Repair__Receiver__4CA06362">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Repair" EntitySet="Repair" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Repair__RepairEm__4D94879B" Association="Self.FK__Repair__RepairEm__4D94879B">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Repair" EntitySet="Repair" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SparePart__Invoi__4E88ABD4" Association="Self.FK__SparePart__Invoi__4E88ABD4">
+            <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="SparePart" EntitySet="SparePart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SparePart__Repai__4F7CD00D" Association="Self.FK__SparePart__Repai__4F7CD00D">
+            <End Role="Repair" EntitySet="Repair" />
+            <End Role="SparePartRequest" EntitySet="SparePartRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SparePart__Spare__5070F446" Association="Self.FK__SparePart__Spare__5070F446">
+            <End Role="SparePart" EntitySet="SparePart" />
+            <End Role="SparePartRequest" EntitySet="SparePartRequest" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UP4Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="EmployeeTransfer" Relationship="Self.FK__EmployeeT__Depar__46E78A0C" FromRole="Department" ToRole="EmployeeTransfer" />
+          <NavigationProperty Name="EquipmentUnitTransfer" Relationship="Self.FK__Equipment__Depar__48CFD27E" FromRole="Department" ToRole="EquipmentUnitTransfer" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EmployeeTransfer" Relationship="Self.FK__EmployeeT__Emplo__47DBAE45" FromRole="Employee" ToRole="EmployeeTransfer" />
+          <NavigationProperty Name="Repair" Relationship="Self.FK__Repair__IssueEmp__4BAC3F29" FromRole="Employee" ToRole="Repair" />
+          <NavigationProperty Name="Repair1" Relationship="Self.FK__Repair__Receiver__4CA06362" FromRole="Employee" ToRole="Repair" />
+          <NavigationProperty Name="Repair2" Relationship="Self.FK__Repair__RepairEm__4D94879B" FromRole="Employee" ToRole="Repair" />
+        </EntityType>
+        <EntityType Name="EmployeeTransfer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__EmployeeT__Depar__46E78A0C" FromRole="EmployeeTransfer" ToRole="Department" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__EmployeeT__Emplo__47DBAE45" FromRole="EmployeeTransfer" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="EquipmentUnit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReleaseYear" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EquipmentUnitTransfer" Relationship="Self.FK__Equipment__Equip__49C3F6B7" FromRole="EquipmentUnit" ToRole="EquipmentUnitTransfer" />
+          <NavigationProperty Name="Repair" Relationship="Self.FK__Repair__Equipmen__4AB81AF0" FromRole="EquipmentUnit" ToRole="Repair" />
+        </EntityType>
+        <EntityType Name="EquipmentUnitTransfer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquipmentUnitId" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="TransferDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__Equipment__Depar__48CFD27E" FromRole="EquipmentUnitTransfer" ToRole="Department" />
+          <NavigationProperty Name="EquipmentUnit" Relationship="Self.FK__Equipment__Equip__49C3F6B7" FromRole="EquipmentUnitTransfer" ToRole="EquipmentUnit" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecevieDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UnitCount" Type="Int32" Nullable="false" />
+          <Property Name="UnitCost" Type="Double" Nullable="false" />
+          <NavigationProperty Name="SparePart" Relationship="Self.FK__SparePart__Invoi__4E88ABD4" FromRole="Invoice" ToRole="SparePart" />
+        </EntityType>
+        <EntityType Name="Repair">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquipmentUnitId" Type="Int32" />
+          <Property Name="IssueEmployeeId" Type="Int32" />
+          <Property Name="ReceiverEmployeeId" Type="Int32" />
+          <Property Name="RepairEmployeeId" Type="Int32" />
+          <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Term" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__Repair__IssueEmp__4BAC3F29" FromRole="Repair" ToRole="Employee" />
+          <NavigationProperty Name="Employee1" Relationship="Self.FK__Repair__Receiver__4CA06362" FromRole="Repair" ToRole="Employee" />
+          <NavigationProperty Name="Employee2" Relationship="Self.FK__Repair__RepairEm__4D94879B" FromRole="Repair" ToRole="Employee" />
+          <NavigationProperty Name="EquipmentUnit" Relationship="Self.FK__Repair__Equipmen__4AB81AF0" FromRole="Repair" ToRole="EquipmentUnit" />
+          <NavigationProperty Name="SparePartRequest" Relationship="Self.FK__SparePart__Repai__4F7CD00D" FromRole="Repair" ToRole="SparePartRequest" />
+        </EntityType>
+        <EntityType Name="SparePart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StockCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Invoice" Relationship="Self.FK__SparePart__Invoi__4E88ABD4" FromRole="SparePart" ToRole="Invoice" />
+          <NavigationProperty Name="SparePartRequest" Relationship="Self.FK__SparePart__Spare__5070F446" FromRole="SparePart" ToRole="SparePartRequest" />
+        </EntityType>
+        <EntityType Name="SparePartRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RepairId" Type="Int32" />
+          <Property Name="SparePartId" Type="Int32" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Repair" Relationship="Self.FK__SparePart__Repai__4F7CD00D" FromRole="SparePartRequest" ToRole="Repair" />
+          <NavigationProperty Name="SparePart" Relationship="Self.FK__SparePart__Spare__5070F446" FromRole="SparePartRequest" ToRole="SparePart" />
+        </EntityType>
+        <Association Name="FK__EmployeeT__Depar__46E78A0C">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeTransfer" Type="Self.EmployeeTransfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeTransfer">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Equipment__Depar__48CFD27E">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="EquipmentUnitTransfer" Type="Self.EquipmentUnitTransfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentUnitTransfer">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeT__Emplo__47DBAE45">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeTransfer" Type="Self.EmployeeTransfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeTransfer">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Repair__IssueEmp__4BAC3F29">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Repair" Type="Self.Repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Repair">
+              <PropertyRef Name="IssueEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Repair__Receiver__4CA06362">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Repair" Type="Self.Repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Repair">
+              <PropertyRef Name="ReceiverEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Repair__RepairEm__4D94879B">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Repair" Type="Self.Repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Repair">
+              <PropertyRef Name="RepairEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Equipment__Equip__49C3F6B7">
+          <End Role="EquipmentUnit" Type="Self.EquipmentUnit" Multiplicity="0..1" />
+          <End Role="EquipmentUnitTransfer" Type="Self.EquipmentUnitTransfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentUnit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentUnitTransfer">
+              <PropertyRef Name="EquipmentUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Repair__Equipmen__4AB81AF0">
+          <End Role="EquipmentUnit" Type="Self.EquipmentUnit" Multiplicity="0..1" />
+          <End Role="Repair" Type="Self.Repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentUnit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Repair">
+              <PropertyRef Name="EquipmentUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SparePart__Invoi__4E88ABD4">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SparePart" Type="Self.SparePart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SparePart">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SparePart__Repai__4F7CD00D">
+          <End Role="Repair" Type="Self.Repair" Multiplicity="0..1" />
+          <End Role="SparePartRequest" Type="Self.SparePartRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Repair">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SparePartRequest">
+              <PropertyRef Name="RepairId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SparePart__Spare__5070F446">
+          <End Role="SparePart" Type="Self.SparePart" Multiplicity="0..1" />
+          <End Role="SparePartRequest" Type="Self.SparePartRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SparePart">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SparePartRequest">
+              <PropertyRef Name="SparePartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UP4Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Department" EntityType="Self.Department" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="EmployeeTransfer" EntityType="Self.EmployeeTransfer" />
+          <EntitySet Name="EquipmentUnit" EntityType="Self.EquipmentUnit" />
+          <EntitySet Name="EquipmentUnitTransfer" EntityType="Self.EquipmentUnitTransfer" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" />
+          <EntitySet Name="Repair" EntityType="Self.Repair" />
+          <EntitySet Name="SparePart" EntityType="Self.SparePart" />
+          <EntitySet Name="SparePartRequest" EntityType="Self.SparePartRequest" />
+          <AssociationSet Name="FK__EmployeeT__Depar__46E78A0C" Association="Self.FK__EmployeeT__Depar__46E78A0C">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="EmployeeTransfer" EntitySet="EmployeeTransfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Equipment__Depar__48CFD27E" Association="Self.FK__Equipment__Depar__48CFD27E">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="EquipmentUnitTransfer" EntitySet="EquipmentUnitTransfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeT__Emplo__47DBAE45" Association="Self.FK__EmployeeT__Emplo__47DBAE45">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeTransfer" EntitySet="EmployeeTransfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Repair__IssueEmp__4BAC3F29" Association="Self.FK__Repair__IssueEmp__4BAC3F29">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Repair" EntitySet="Repair" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Repair__Receiver__4CA06362" Association="Self.FK__Repair__Receiver__4CA06362">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Repair" EntitySet="Repair" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Repair__RepairEm__4D94879B" Association="Self.FK__Repair__RepairEm__4D94879B">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Repair" EntitySet="Repair" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Equipment__Equip__49C3F6B7" Association="Self.FK__Equipment__Equip__49C3F6B7">
+            <End Role="EquipmentUnit" EntitySet="EquipmentUnit" />
+            <End Role="EquipmentUnitTransfer" EntitySet="EquipmentUnitTransfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Repair__Equipmen__4AB81AF0" Association="Self.FK__Repair__Equipmen__4AB81AF0">
+            <End Role="EquipmentUnit" EntitySet="EquipmentUnit" />
+            <End Role="Repair" EntitySet="Repair" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SparePart__Invoi__4E88ABD4" Association="Self.FK__SparePart__Invoi__4E88ABD4">
+            <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="SparePart" EntitySet="SparePart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SparePart__Repai__4F7CD00D" Association="Self.FK__SparePart__Repai__4F7CD00D">
+            <End Role="Repair" EntitySet="Repair" />
+            <End Role="SparePartRequest" EntitySet="SparePartRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SparePart__Spare__5070F446" Association="Self.FK__SparePart__Spare__5070F446">
+            <End Role="SparePart" EntitySet="SparePart" />
+            <End Role="SparePartRequest" EntitySet="SparePartRequest" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище UP4ModelContainer" CdmEntityContainer="UP4Entities">
+          <EntitySetMapping Name="Department">
+            <EntityTypeMapping TypeName="UP4Model.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="UP4Model.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeTransfer">
+            <EntityTypeMapping TypeName="UP4Model.EmployeeTransfer">
+              <MappingFragment StoreEntitySet="EmployeeTransfer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EquipmentUnit">
+            <EntityTypeMapping TypeName="UP4Model.EquipmentUnit">
+              <MappingFragment StoreEntitySet="EquipmentUnit">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StockNumber" ColumnName="StockNumber" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ReleaseYear" ColumnName="ReleaseYear" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EquipmentUnitTransfer">
+            <EntityTypeMapping TypeName="UP4Model.EquipmentUnitTransfer">
+              <MappingFragment StoreEntitySet="EquipmentUnitTransfer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EquipmentUnitId" ColumnName="EquipmentUnitId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="TransferDate" ColumnName="TransferDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoice">
+            <EntityTypeMapping TypeName="UP4Model.Invoice">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RecevieDate" ColumnName="RecevieDate" />
+                <ScalarProperty Name="UnitCount" ColumnName="UnitCount" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Repair">
+            <EntityTypeMapping TypeName="UP4Model.Repair">
+              <MappingFragment StoreEntitySet="Repair">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EquipmentUnitId" ColumnName="EquipmentUnitId" />
+                <ScalarProperty Name="IssueEmployeeId" ColumnName="IssueEmployeeId" />
+                <ScalarProperty Name="ReceiverEmployeeId" ColumnName="ReceiverEmployeeId" />
+                <ScalarProperty Name="RepairEmployeeId" ColumnName="RepairEmployeeId" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Term" ColumnName="Term" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SparePart">
+            <EntityTypeMapping TypeName="UP4Model.SparePart">
+              <MappingFragment StoreEntitySet="SparePart">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StockCount" ColumnName="StockCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SparePartRequest">
+            <EntityTypeMapping TypeName="UP4Model.SparePartRequest">
+              <MappingFragment StoreEntitySet="SparePartRequest">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RepairId" ColumnName="RepairId" />
+                <ScalarProperty Name="SparePartId" ColumnName="SparePartId" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

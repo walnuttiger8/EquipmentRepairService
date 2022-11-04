@@ -1,0 +1,33 @@
+﻿<Window x:Class="EquipmentRepairService.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EquipmentRepairService"
+        mc:Ignorable="d"
+        Title="Ремонт оборудования" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="20"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Шарипов Булат Альбертович" Foreground="Yellow" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <StackPanel x:Name="mainPanel" Grid.Row="1" Grid.Column="1">
+            <Button x:Name="equipmentUnitViewButton" Content="Просмотр техники" Click="equipmentUnitViewButton_Click" Background="White" Height="40"/>
+            <Button x:Name="employeeViewButton" Content="Просмотр сотрудников" Click="employeeViewButton_Click" Background="Blue"/>
+            <Button x:Name="employeePdfView" Content="Выгрузить сотрудников" Click="employeePdfView_Click" Background="Red"/>
+        </StackPanel>
+    </Grid>
+</Window>
