@@ -38,9 +38,9 @@ namespace EquipmentRepairService.Views
             dataGrid.Headers.Add("FirstName", "Имя");
             dataGrid.Headers.Add("MiddleName", "Отчество");
 
-            dataGrid.Validators.Add("Код сотрудника", new List<Func<object, string>>() { Validators.MinLength(3, "Код сотрудника должен быть длиннее 1-го символа") });
-            dataGrid.Validators.Add("Фамилия", new List<Func<object, string>>() { Validators.MinLength(1, "Фамилия должна быть длиннее 1-го символа") });
-            dataGrid.Validators.Add("Имя", new List<Func<object, string>>() { Validators.MinLength(1, "Имя должно быть длиннее 1-го символа") });
+            dataGrid.Validators.Add("Код сотрудника", new List<Func<object, string>>() { Validators.MinLength(3, "Код сотрудника должен быть длиннее 3-х символов") });
+            dataGrid.Validators.Add("Фамилия", new List<Func<object, string>>() { Validators.MinLength(2, "Фамилия должна быть длиннее 1-го символа") });
+            dataGrid.Validators.Add("Имя", new List<Func<object, string>>() { Validators.MinLength(2, "Имя должно быть длиннее 1-го символа") });
 
             return dataGrid;
         }
